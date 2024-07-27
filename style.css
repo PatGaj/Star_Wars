@@ -41,19 +41,21 @@ nav {
   place-items: center center;
 }
 #saber button {
-  height: 20px;
+  height: 15px;
   width: 100px;
-  margin-right: 50px;
+
   border-radius: 8px;
   border: none;
   box-shadow: 0 0 5px 3px var(--green);
   background-color: var(--green);
 }
+
 #saber {
   display: flex;
+  margin-right: 50px;
 }
 #saber img {
-  width: 100px;
+  width: 80px;
 }
 
 nav div {
@@ -88,16 +90,109 @@ nav div {
 #vader {
   width: 400px;
   position: fixed;
-  right: -120px;
-  bottom: -65px;
+  right: -100px;
+  bottom: -20px;
   display: none;
+  animation: appearance 90s linear;
+}
+#destroyer {
+  width: 400px;
+  display: none;
+  position: fixed;
+  top: 50px;
+  right: -420px;
+  animation: flyDestroyer 8s linear infinite;
+  transform: rotate(10deg);
+}
+#xWing {
+  width: 300px;
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: -300px;
+  transform: rotate(10deg);
+  animation: flyxWing 5s cubic-bezier(0.6, 0.4, 0.2, 0.5) infinite;
+}
+@keyframes flyxWing {
+  0% {
+    top: 80px;
+    left: -300px;
+  }
+  50% {
+    top: 60px;
+    left: 0px;
+  }
+  98% {
+    top: 80px;
+    left: 100px;
+    opacity: 1;
+  }
+  100% {
+    top: 80px;
+    left: 400px;
+    opacity: 0;
+  }
+}
+@keyframes flyDestroyer {
+  0% {
+    top: 50px;
+    right: -420px;
+  }
+  20% {
+    top: 120px;
+    right: -160px;
+    transform: rotate(8deg);
+  }
+  40% {
+    top: 190px;
+    right: 80px;
+    transform: rotate(10deg);
+  }
+  60% {
+    top: 260px;
+    right: 320px;
+    transform: rotate(14deg);
+  }
+  80% {
+    top: 280px;
+    right: 400px;
+    transform: rotate(18deg);
+  }
+  99% {
+    top: 300px;
+    right: 480px;
+    transform: rotate(20deg);
+    opacity: 1;
+  }
+  100% {
+    top: 300px;
+    right: 800px;
+    transform: rotate(20deg);
+    opacity: 0;
+  }
+}
+@keyframes appearance {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 #yoda {
   width: 300px;
   position: fixed;
-  left: -60px;
+  left: -30px;
   bottom: -15px;
   display: none;
+  animation: appearance 59s linear;
 }
 @media (min-width: 1920px) {
   body {
@@ -105,6 +200,36 @@ nav div {
   }
   nav {
     width: 1920px;
+  }
+}
+@media (max-width: 1024px) {
+  #buttons {
+    margin-top: 25px;
+    flex-direction: column;
+    row-gap: 25px;
+  }
+  #buttons button {
+    width: calc(100vw - 300px);
+    height: 50px;
+  }
+}
+@media (max-width: 600px) {
+  nav div {
+    margin-left: 40px;
+  }
+  #saber {
+    margin-left: 0;
+  }
+  #buttons button {
+    width: calc(100vw - 150px);
+  }
+  #saber img {
+    display: none;
+  }
+  #saber button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
   }
 }
 @media (max-width: 400px) {
