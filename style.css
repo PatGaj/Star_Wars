@@ -8,12 +8,12 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: content-box;
+  box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
 button {
   font-weight: bold;
-  padding: 0 10px;
+  padding: 0 5px;
   cursor: pointer;
 }
 body {
@@ -26,40 +26,31 @@ body {
   row-gap: 25px;
   transition: background-image 0.5s ease-in-out;
 }
+#content{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+th{
+  padding: 0 5px;
+}
 nav {
   background-color: var(--black);
-  width: 100vw;
+  width: 100%;
   height: 60px;
-  box-shadow: inset 0 -6px 10px 5px var(--dark-yellow);
-  border-bottom-right-radius: 50px;
-  border-bottom-left-radius: 50px;
-  border-bottom: solid var(--dark-yellow) 2px;
+  box-shadow: inset 0 -5px 8px 2px var(--dark-yellow);
   color: var(--white);
-  font-size: large;
+  font-size: 16px;
   display: flex;
   justify-content: space-between;
-  place-items: center center;
+  align-items: center;
+  padding: 0 50px;
 }
-#saber button {
-  height: 15px;
+#themeButton {
+  height: 30px;
   width: 100px;
-
   border-radius: 8px;
-  border: none;
-  box-shadow: 0 0 5px 3px var(--green);
   background-color: var(--green);
-}
-
-#saber {
-  display: flex;
-  margin-right: 50px;
-}
-#saber img {
-  width: 80px;
-}
-
-nav div {
-  margin-left: 50px;
 }
 #logo {
   width: 50%;
@@ -85,7 +76,7 @@ nav div {
   transition: transform 0.2s ease-in-out;
 }
 #buttons button:focus {
-  border: solid var(--dark-yellow) 3px;
+  border: solid var(--green) 2px;
 }
 #vader {
   width: 400px;
@@ -93,107 +84,29 @@ nav div {
   right: -100px;
   bottom: -20px;
   display: none;
-  animation: appearance 90s linear;
-}
-#destroyer {
-  width: 400px;
-  display: none;
-  position: fixed;
-  top: 50px;
-  right: -420px;
-  animation: flyDestroyer 8s linear infinite;
-  transform: rotate(10deg);
-}
-#xWing {
-  width: 300px;
-  display: none;
-  position: fixed;
-  top: 80px;
-  left: -300px;
-  transform: rotate(10deg);
-  animation: flyxWing 5s cubic-bezier(0.6, 0.4, 0.2, 0.5) infinite;
-}
-@keyframes flyxWing {
-  0% {
-    top: 80px;
-    left: -300px;
-  }
-  50% {
-    top: 60px;
-    left: 0px;
-  }
-  98% {
-    top: 80px;
-    left: 100px;
-    opacity: 1;
-  }
-  100% {
-    top: 80px;
-    left: 400px;
-    opacity: 0;
-  }
-}
-@keyframes flyDestroyer {
-  0% {
-    top: 50px;
-    right: -420px;
-  }
-  20% {
-    top: 120px;
-    right: -160px;
-    transform: rotate(8deg);
-  }
-  40% {
-    top: 190px;
-    right: 80px;
-    transform: rotate(10deg);
-  }
-  60% {
-    top: 260px;
-    right: 320px;
-    transform: rotate(14deg);
-  }
-  80% {
-    top: 280px;
-    right: 400px;
-    transform: rotate(18deg);
-  }
-  99% {
-    top: 300px;
-    right: 480px;
-    transform: rotate(20deg);
-    opacity: 1;
-  }
-  100% {
-    top: 300px;
-    right: 800px;
-    transform: rotate(20deg);
-    opacity: 0;
-  }
-}
-@keyframes appearance {
-  0% {
-    opacity: 0;
-  }
-  5% {
-    opacity: 1;
-  }
-
-  95% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
 #yoda {
   width: 300px;
   position: fixed;
   left: -30px;
-  bottom: -15px;
+  bottom: -20px;
   display: none;
-  animation: appearance 59s linear;
 }
+@keyframes appearance {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (min-width: 1920px) {
   body {
     background-size: 100%;
