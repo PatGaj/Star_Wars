@@ -8,12 +8,12 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: content-box;
+  box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
 button {
   font-weight: bold;
-  padding: 0 10px;
+  padding: 0 5px;
   cursor: pointer;
 }
 body {
@@ -26,38 +26,31 @@ body {
   row-gap: 25px;
   transition: background-image 0.5s ease-in-out;
 }
+#content{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+th{
+  padding: 0 5px;
+}
 nav {
   background-color: var(--black);
-  width: 100vw;
+  width: 100%;
   height: 60px;
-  box-shadow: inset 0 -6px 10px 5px var(--dark-yellow);
-  border-bottom-right-radius: 50px;
-  border-bottom-left-radius: 50px;
-  border-bottom: solid var(--dark-yellow) 2px;
+  box-shadow: inset 0 -5px 8px 2px var(--dark-yellow);
   color: var(--white);
-  font-size: large;
+  font-size: 16px;
   display: flex;
   justify-content: space-between;
-  place-items: center center;
+  align-items: center;
+  padding: 0 50px;
 }
-#saber button {
-  height: 20px;
+#themeButton {
+  height: 30px;
   width: 100px;
-  margin-right: 50px;
   border-radius: 8px;
-  border: none;
-  box-shadow: 0 0 5px 3px var(--green);
   background-color: var(--green);
-}
-#saber {
-  display: flex;
-}
-#saber img {
-  width: 100px;
-}
-
-nav div {
-  margin-left: 50px;
 }
 #logo {
   width: 50%;
@@ -83,28 +76,73 @@ nav div {
   transition: transform 0.2s ease-in-out;
 }
 #buttons button:focus {
-  border: solid var(--dark-yellow) 3px;
+  border: solid var(--green) 2px;
 }
 #vader {
   width: 400px;
   position: fixed;
-  right: -120px;
-  bottom: -65px;
+  right: -100px;
+  bottom: -20px;
   display: none;
 }
 #yoda {
   width: 300px;
   position: fixed;
-  left: -60px;
-  bottom: -15px;
+  left: -30px;
+  bottom: -20px;
   display: none;
 }
+@keyframes appearance {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (min-width: 1920px) {
   body {
     background-size: 100%;
   }
   nav {
     width: 1920px;
+  }
+}
+@media (max-width: 1024px) {
+  #buttons {
+    margin-top: 25px;
+    flex-direction: column;
+    row-gap: 25px;
+  }
+  #buttons button {
+    width: calc(100vw - 300px);
+    height: 50px;
+  }
+}
+@media (max-width: 600px) {
+  nav div {
+    margin-left: 40px;
+  }
+  #saber {
+    margin-left: 0;
+  }
+  #buttons button {
+    width: calc(100vw - 150px);
+  }
+  #saber img {
+    display: none;
+  }
+  #saber button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
   }
 }
 @media (max-width: 400px) {
