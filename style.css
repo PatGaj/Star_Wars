@@ -26,12 +26,12 @@ body {
   row-gap: 25px;
   transition: background-image 0.5s ease-in-out;
 }
-#content{
+#content {
   width: 100vw;
   display: flex;
   justify-content: center;
 }
-th{
+th {
   padding: 0 5px;
 }
 nav {
@@ -75,38 +75,18 @@ nav {
   transform: scale(1.2, 1.2);
   transition: transform 0.2s ease-in-out;
 }
-#buttons button:focus {
-  border: solid var(--green) 2px;
+/* Tabela */
+th{
+  max-width: 100px;
+  padding: 5px;
 }
-#vader {
-  width: 400px;
-  position: fixed;
-  right: -100px;
-  bottom: -20px;
-  display: none;
+#tdAction{
+  display: flex;
+  flex-direction: column;
 }
-#yoda {
-  width: 300px;
-  position: fixed;
-  left: -30px;
-  bottom: -20px;
-  display: none;
+table{
+  width: 80vw;
 }
-@keyframes appearance {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 @media (min-width: 1920px) {
   body {
     background-size: 100%;
