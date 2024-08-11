@@ -3,7 +3,9 @@
   --black: #000000;
   --white: #ffffff;
   --red: #ff0000;
+  --dark-red: #861818;
   --green: #00ff00;
+  --dark-green: #068806;
 }
 * {
   padding: 0;
@@ -20,6 +22,7 @@ body {
   background-image: url("img\\falcon_background.jpg");
   background-repeat: no-repeat;
   background-position: top;
+  background-attachment: fixed;
   display: flex;
   place-items: center center;
   flex-direction: column;
@@ -30,6 +33,11 @@ body {
   width: 100vw;
   display: flex;
   justify-content: center;
+}
+/* #infoTdHead {
+} */
+#closeInfoButton {
+  float: right;
 }
 nav {
   background-color: var(--black);
@@ -77,17 +85,15 @@ th {
   max-width: 100px;
   padding: 5px;
 }
-#tdAction {
-  display: flex;
-  flex-direction: column;
+td {
+  border-top: solid 1px;
 }
 #mainTable {
   width: 80vw;
   text-align: center;
-  height: 100%;
   background-color: #00ff00;
   border-collapse: collapse;
-  border: solid 1px;
+  border: solid 2px;
 }
 tfoot td {
   text-align: center;
@@ -102,25 +108,68 @@ tfoot td {
   width: 70vw;
   height: 50vh;
   border-collapse: collapse;
-  border: solid 1px;
+  border-radius: 20px;
+  background-color: #068806;
 }
 #info tbody td {
-  background-color: #ff0000;
   max-width: 40vw;
+  overflow: hidden;
 }
-#tdAction {
-  align-items: center;
+#info tbody th {
+  padding-right: 15px;
+  text-align: right;
+  border-top: solid 1px;
 }
-#tdAction button {
-  width: 40px;
-  height: 40px;
+#infoTdHead {
+  border: none;
 }
-.trashCan {
+#closeInfoButton {
+  border: none;
+  border-top-right-radius: 10px;
+  background-color: var(--red);
+  border: solid var(--dark-red) 2px;
+}
+.tdAction {
+  padding: 5px 0;
+  display: flex;
+  flex-direction: column;
+  place-items: center center;
+  row-gap: 5px;
+}
+.deleteButton {
+  background-color: var(--red);
+  background-image: url("img/trash-can.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: solid var(--dark-red) 1px;
+  border-radius: 5px;
   width: 20px;
+  height: 20px;
+}
+.infoButton {
+  width: 20px;
+  height: 20px;
+  background-color: var(--green);
+  border: solid var(--dark-green) 1px;
+  border-radius: 5px;
+  text-align: center;
+}
+.checkBoxRow {
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
 }
 #removeAllButton {
   position: absolute;
   background-color: #ff0000;
+}
+.trBody {
+  height: 70px;
+}
+#headerRow {
+  height: 30px;
 }
 
 @media (min-width: 1920px) {
@@ -152,13 +201,8 @@ tfoot td {
   #buttons button {
     width: calc(100vw - 150px);
   }
-  #saber img {
-    display: none;
-  }
-  #saber button {
-    width: 30px;
-    height: 30px;
-    border-radius: 50px;
+  table {
+    font-size: 12px;
   }
 }
 @media (max-width: 400px) {
