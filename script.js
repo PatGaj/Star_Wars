@@ -4,7 +4,7 @@ const body = document.body;
 // Nav
 const nav = buildElement("nav");
 const spanNav = buildElement("span", undefined, undefined, "To hear something type 'vader' or 'yoda'");
-const themeButton = buildElement("button", "themeButton", undefined, "Light side");
+const themeButton = buildElement("button", "themeButton", undefined, "Dark side");
 themeButton.addEventListener("click", changeSide);
 nav.append(spanNav, themeButton);
 
@@ -38,8 +38,9 @@ content.appendChild(containerForTable);
 
 // Search do SearchArea
 const idSearch = buildElement("input", "idSearch");
-idSearch.setAttribute("placeholder", `1-${mainRowsInTable.length}`);
 idSearch.setAttribute("type", "number");
+idSearch.setAttribute("placeholder", `Id`);
+
 idSearch.min = 1;
 const nameSearch = buildElement("input", "nameSearch");
 nameSearch.setAttribute("placeholder", `search by `);
@@ -55,7 +56,7 @@ previousPage.addEventListener("click", () => {
     addRow();
   }
 });
-const nextPage = buildElement("button", "rightArrow", undefined, ">");
+const nextPage = buildElement("button", "nextPage", undefined, ">");
 nextPage.addEventListener("click", () => {
   if (actualyPage + 1 !== quantityPages) {
     actualyPage += 1;
@@ -86,8 +87,11 @@ listOfMaxRows.forEach((item) => {
   maxRowsInPage.appendChild(maxPages);
 });
 const lastPage = buildElement("span", "lastPage");
-
-changePageArea.append(previousPage, changeActualyPage, lastPage, nextPage, maxRowsInPage);
+const masterPage = buildElement("div", "masterPage");
+masterPage.append(changeActualyPage, lastPage);
+const changeArea = buildElement("div", "changeArea");
+changeArea.append(previousPage, masterPage, nextPage, maxRowsInPage);
+changePageArea.append(changeArea);
 // Sounds
 const vaderSound = buildElement("audio", "vaderSound", undefined, undefined, "./mp3/sound-for-vader.mp3");
 const yodaSound = buildElement("audio", "yodaSound", undefined, undefined, "./mp3/sound-for-yoda.mp3");
@@ -133,18 +137,26 @@ function soundStartStop(sound, timeToStopInSec) {
 }
 
 function changeSide() {
+  const lightTheme = ["#9eaba2ee", "#bdd1c5ee", "#eecc8cbb", "#e8b298bb", "#d3a29d", "#a36361", "#492928"];
+  const darkTheme = ["#4b462fee", "#7a7352ee", "#551a1ad2", "#420b0bd2", "#ad1906", "#7c1616", "#ff0000"];
   const buttons = document.querySelectorAll("#buttons button");
-  if (themeButton.textContent === "Light side") {
-    themeButton.textContent = "Dark side";
-    themeButton.style.backgroundColor = "var(--red)";
+  if (themeButton.textContent === "Dark side") {
+    for (let i = 1; i <= darkTheme.length; i++) {
+      document.documentElement.style.setProperty(`--kolor${i}`, darkTheme[i - 1]);
+    }
+    themeButton.textContent = "Light side";
+    themeButton.style.backgroundColor = "var(--green)";
     body.style.backgroundImage = 'url("./img/vader_background.jpg")';
     buttons.forEach((button) => {
       button.style.boxShadow = "inset 0 -5px 10px 5px var(--red)";
       button.style.color = "var(--red)";
     });
-  } else if (themeButton.textContent === "Dark side") {
-    themeButton.textContent = "Light side";
-    themeButton.style.backgroundColor = "var(--green)";
+  } else if (themeButton.textContent === "Light side") {
+    for (let i = 1; i <= lightTheme.length; i++) {
+      document.documentElement.style.setProperty(`--kolor${i}`, lightTheme[i - 1]);
+    }
+    themeButton.textContent = "Dark side";
+    themeButton.style.backgroundColor = "var(--red)";
     body.style.backgroundImage = 'url("./img/falcon_background.jpg")';
     buttons.forEach((button) => {
       button.style.boxShadow = "inset 0 -5px 10px 5px var(--black)";
@@ -187,11 +199,6 @@ function removeRow(child) {
     actualyPage = quantityPages - 2;
   } else if (mainRowsInTable.length === 0) {
     mainTableBody.textContent = "Brak elementów do wyświetlenia";
-    idSearch.placeholder = "0";
-    idSearch.min = 0;
-  } else {
-    idSearch.placeholder = `1-${mainRowsInTable.length}`;
-    idSearch.max = mainRowsInTable.length;
   }
   addRow();
 }
@@ -269,6 +276,12 @@ function clearList(list) {
 function makeTableWitchData(category) {
   // Dodaje zaznaczenie do aktualnie używanego przycisku
   actualyCategory(category);
+  while (markedCheckbox.length !== 0) {
+    markedCheckbox.pop();
+  }
+  if (Boolean(document.getElementById("removeAllButton"))) {
+    changePageArea.removeChild(document.getElementById("removeAllButton"));
+  }
   actualyPage = 0;
   idSearch.value = "";
   nameSearch.value = "";
@@ -285,11 +298,11 @@ function makeTableWitchData(category) {
   const mainTableHeader = buildElement("thead", "mainTableHeader");
   const mainTableBody = buildElement("tbody", "mainTableBody");
   mainTable.append(mainTableHeader, mainTableBody);
-  const headerRow = buildElement("tr","headerRow");
+  const headerRow = buildElement("tr", "headerRow");
   mainTableHeader.appendChild(headerRow);
 
   // Dodaje Id i Action
-  const headerId = buildElement("th", undefined, undefined, "Id");
+  const headerId = buildElement("th", "thIndex", undefined, "Id");
   const headerAction = buildElement("th", "headerAction", undefined, "action");
   headerRow.append(headerId, headerAction);
 
@@ -391,8 +404,6 @@ function addRow() {
   quantityPages = Math.ceil(searchedRows.length / maxRows);
   lastPage.textContent = ` z ${quantityPages}`;
   changeActualyPage.placeholder = actualyPage + 1;
-  idSearch.placeholder = `1-${mainRowsInTable.length}`;
-  idSearch.max = mainRowsInTable.length;
 }
 
 function search() {
@@ -401,10 +412,6 @@ function search() {
   }
   const filterName = nameSearch.value.toLowerCase();
   let filterId = idSearch.value;
-  if (parseInt(idSearch.value) > idSearch.max) {
-    idSearch.value = `${idSearch.max}`;
-    filterId = `${idSearch.max}`;
-  }
 
   for (let i = 0; i < mainRowsInTable.length; i++) {
     const text = mainRowsInTable[i].getElementsByTagName("td")[1];
