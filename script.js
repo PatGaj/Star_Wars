@@ -1,31 +1,23 @@
 import { rowData } from "./data.js";
 
 const body = document.body;
-// Nav
 const nav = buildElement("nav");
 const spanNav = buildElement("span", undefined, undefined, "To hear something type 'vader' or 'yoda'");
 const themeButton = buildElement("button", "themeButton", undefined, "Dark side");
 themeButton.addEventListener("click", changeSide);
 nav.append(spanNav, themeButton);
-
-// Buttons
-const divButtons = buildElement("div", "buttons");
+const divButtons = buildElement("div", "divButtons");
 for (const key in rowData) {
-  const button = buildElement("button", key, undefined, key.toUpperCase());
+  const button = buildElement("button", key, "categoryButtons", key.toUpperCase());
   button.addEventListener("click", () => makeTableWitchData(key));
   divButtons.appendChild(button);
 }
-
-// Content
 const content = buildElement("div", "content");
-// Logo
 const logo = buildElement("img", "logo", undefined, undefined, "./img/star_wars.png");
 content.appendChild(logo);
-
-// Tabela
-let mainRowsInTable = [];
-let searchedRows = [];
-let markedCheckbox = [];
+const mainRowsInTable = [];
+const searchedRows = [];
+const markedCheckbox = [];
 let actualyPage = 0;
 let quantityPages = 1;
 const containerForTable = buildElement("div", "containerForTable");
@@ -35,46 +27,41 @@ containerForTable.style.display = "none";
 const changePageArea = buildElement("div", "changePageArea");
 containerForTable.append(searchArea, mainTable, changePageArea);
 content.appendChild(containerForTable);
-
-// Search do SearchArea
-const idSearch = buildElement("input", "idSearch");
+const idSearch = buildElement("input", "idSearch", "search");
 idSearch.setAttribute("type", "number");
 idSearch.setAttribute("placeholder", `Id`);
-
 idSearch.min = 1;
-const nameSearch = buildElement("input", "nameSearch");
+const nameSearch = buildElement("input", "nameSearch", "search");
 nameSearch.setAttribute("placeholder", `search by `);
 const searchButton = buildElement("button", "searchButton", undefined, "Search");
 searchButton.addEventListener("click", addRow);
 searchArea.append(idSearch, nameSearch, searchButton);
-
-// Pages do changePageArea
-const previousPage = buildElement("button", "previousPage", undefined, "<");
+const previousPage = buildElement("button", "previousPage", "arrowsToChangePage", "<");
 previousPage.addEventListener("click", () => {
   if (actualyPage !== 0) {
     actualyPage -= 1;
     addRow();
   }
 });
-const nextPage = buildElement("button", "nextPage", undefined, ">");
+const nextPage = buildElement("button", "nextPage", "arrowsToChangePage", ">");
 nextPage.addEventListener("click", () => {
   if (actualyPage + 1 !== quantityPages) {
     actualyPage += 1;
     addRow();
   }
 });
-const changeActualyPage = buildElement("input", "page");
-changeActualyPage.setAttribute("placeholder", actualyPage + 1);
-changeActualyPage.addEventListener("change", () => {
-  let changePage = parseInt(changeActualyPage.value);
+const inputToChangePage = buildElement("input", "inputToChangePage");
+inputToChangePage.setAttribute("placeholder", actualyPage + 1);
+inputToChangePage.addEventListener("change", () => {
+  let changePage = parseInt(inputToChangePage.value);
   if (changePage > quantityPages) {
     changePage = quantityPages;
   }
   actualyPage = changePage - 1;
   addRow();
-  changeActualyPage.value = "";
+  inputToChangePage.value = "";
 });
-const maxRowsInPage = buildElement("select", "maxRows");
+const maxRowsInPage = buildElement("select", "maxRowsInPage");
 maxRowsInPage.addEventListener("change", () => {
   actualyPage = 0;
   addRow();
@@ -87,21 +74,18 @@ listOfMaxRows.forEach((item) => {
   maxRowsInPage.appendChild(maxPages);
 });
 const lastPage = buildElement("span", "lastPage");
-const masterPage = buildElement("div", "masterPage");
-masterPage.append(changeActualyPage, lastPage);
-const changeArea = buildElement("div", "changeArea");
-changeArea.append(previousPage, masterPage, nextPage, maxRowsInPage);
-changePageArea.append(changeArea);
-// Sounds
+const containerForActualPage = buildElement("div", "containerForActualPage");
+containerForActualPage.append(inputToChangePage, lastPage);
+const pagination = buildElement("div", "pagination");
+pagination.append(previousPage, containerForActualPage, nextPage, maxRowsInPage);
+changePageArea.append(pagination);
 const vaderSound = buildElement("audio", "vaderSound", undefined, undefined, "./mp3/sound-for-vader.mp3");
 const yodaSound = buildElement("audio", "yodaSound", undefined, undefined, "./mp3/sound-for-yoda.mp3");
-// Dodanie do Body
 body.append(nav, divButtons, content, vaderSound, yodaSound);
-
 let typed = "";
 const keywordVader = "vader";
 const keywordYoda = "yoda";
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", (event) => {
   typed += event.key.toLowerCase();
   if (typed.includes(keywordVader)) {
     typed = "";
@@ -120,14 +104,11 @@ document.addEventListener("keydown", function (event) {
     typed = typed.substring(typed.length - keywordVader.length);
   }
 });
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// Function Section
 
 function soundStop(sound) {
   sound.pause();
   sound.currentTime = 0;
 }
-
 function soundStartStop(sound, timeToStopInSec) {
   sound.play();
   setTimeout(() => {
@@ -135,36 +116,44 @@ function soundStartStop(sound, timeToStopInSec) {
     sound.currentTime = 0;
   }, timeToStopInSec * 1000);
 }
-
 function changeSide() {
-  const lightTheme = ["#9eaba2ee", "#bdd1c5ee", "#eecc8cbb", "#e8b298bb", "#d3a29d", "#a36361", "#492928"];
-  const darkTheme = ["#4b462fee", "#7a7352ee", "#551a1ad2", "#420b0bd2", "#ad1906", "#7c1616", "#ff0000"];
+  const lightTheme = [
+    "#9eaba2ee",
+    "#bdd1c5ee",
+    "#eecc8cbb",
+    "#e8b298bb",
+    "#d3a29d",
+    "#a36361",
+    "#492928",
+    "#ff0000",
+    "#000000",
+  ];
+  const darkTheme = [
+    "#4b462fee",
+    "#7a7352ee",
+    "#551a1ad2",
+    "#420b0baa",
+    "#ad1906",
+    "#7c1616",
+    "#ff0000",
+    "#00ff00",
+    "#ff0000",
+  ];
   const buttons = document.querySelectorAll("#buttons button");
   if (themeButton.textContent === "Dark side") {
     for (let i = 1; i <= darkTheme.length; i++) {
-      document.documentElement.style.setProperty(`--kolor${i}`, darkTheme[i - 1]);
+      document.documentElement.style.setProperty(`--color${i}`, darkTheme[i - 1]);
     }
     themeButton.textContent = "Light side";
-    themeButton.style.backgroundColor = "var(--green)";
     body.style.backgroundImage = 'url("./img/vader_background.jpg")';
-    buttons.forEach((button) => {
-      button.style.boxShadow = "inset 0 -5px 10px 5px var(--red)";
-      button.style.color = "var(--red)";
-    });
   } else if (themeButton.textContent === "Light side") {
     for (let i = 1; i <= lightTheme.length; i++) {
-      document.documentElement.style.setProperty(`--kolor${i}`, lightTheme[i - 1]);
+      document.documentElement.style.setProperty(`--color${i}`, lightTheme[i - 1]);
     }
     themeButton.textContent = "Dark side";
-    themeButton.style.backgroundColor = "var(--red)";
     body.style.backgroundImage = 'url("./img/falcon_background.jpg")';
-    buttons.forEach((button) => {
-      button.style.boxShadow = "inset 0 -5px 10px 5px var(--black)";
-      button.style.color = "var(--black)";
-    });
   }
 }
-
 function buildElement(typeElement, idElement, classElement, textElement, srcElement) {
   const element = document.createElement(typeElement);
   if (idElement !== undefined) {
@@ -181,29 +170,27 @@ function buildElement(typeElement, idElement, classElement, textElement, srcElem
   }
   return element;
 }
-
 function actualyCategory(category) {
   const buttons = divButtons.children;
   for (const button of buttons) {
     button.style.border = "none";
   }
   const clickedButton = document.getElementById(category);
-  clickedButton.style.border = "solid var(--green) 2px";
+  clickedButton.style.border = "solid var(--dark-green) 2px";
 }
-
-// Remove Row
 function removeRow(child) {
   const mainTableBody = document.getElementById("mainTableBody");
   mainRowsInTable.splice(mainRowsInTable.indexOf(child), 1);
   if (mainTableBody.children.length === 1 && mainRowsInTable.length !== 0) {
     actualyPage = quantityPages - 2;
+    if (actualyPage < 0) {
+      actualyPage = 0;
+    }
   } else if (mainRowsInTable.length === 0) {
     mainTableBody.textContent = "Brak elementów do wyświetlenia";
   }
   addRow();
 }
-
-// Info row
 function infoRow(parent, rowToGetInfo) {
   const info = buildElement("table", "info");
   parent.appendChild(info);
@@ -230,7 +217,6 @@ function infoRow(parent, rowToGetInfo) {
     infoTrBody.append(infoThBody, infoTdBody);
   }
 }
-
 function checkSelected(checkbox, listOfMarkedCheckboxs, row) {
   if (checkbox.checked) {
     const empty = listOfMarkedCheckboxs.indexOf("empty");
@@ -263,7 +249,6 @@ function checkSelected(checkbox, listOfMarkedCheckboxs, row) {
     changePageArea.removeChild(removeAllButton);
   }
 }
-
 function clearList(list) {
   if (list[list.length - 1] === "empty") {
     list.pop();
@@ -274,7 +259,6 @@ function clearList(list) {
 }
 
 function makeTableWitchData(category) {
-  // Dodaje zaznaczenie do aktualnie używanego przycisku
   actualyCategory(category);
   while (markedCheckbox.length !== 0) {
     markedCheckbox.pop();
@@ -285,28 +269,21 @@ function makeTableWitchData(category) {
   actualyPage = 0;
   idSearch.value = "";
   nameSearch.value = "";
-  // Sprawdza czy logo jest widoczne
   if (Boolean(document.getElementById("logo"))) {
     content.removeChild(logo);
     containerForTable.style.display = "block";
   }
-  // Sprawdza czy jest mainTable ma dzieci jak tak to usuwa
   while (mainTable.children.length !== 0) {
     mainTable.removeChild(mainTable.firstChild);
   }
-  // Tworzy nowy heder i body w tabeli
   const mainTableHeader = buildElement("thead", "mainTableHeader");
   const mainTableBody = buildElement("tbody", "mainTableBody");
   mainTable.append(mainTableHeader, mainTableBody);
   const headerRow = buildElement("tr", "headerRow");
   mainTableHeader.appendChild(headerRow);
-
-  // Dodaje Id i Action
   const headerId = buildElement("th", "thIndex", undefined, "Id");
   const headerAction = buildElement("th", "headerAction", undefined, "action");
   headerRow.append(headerId, headerAction);
-
-  // Sprawdza jaka kategoria kliknięta i dobiera nazyw kolumn do niej
   let columns;
   switch (category) {
     case "vehicles":
@@ -328,12 +305,9 @@ function makeTableWitchData(category) {
       columns = ["title", "director", "release_date", "created"];
       break;
   }
-  // Czyszczenie rekordów
   while (mainRowsInTable.length !== 0) {
     mainRowsInTable.pop();
   }
-
-  // Dodanie Nazw Kolumn
   for (const key in rowData[category][0]) {
     if (columns.includes(key)) {
       const data = key.replace("_", " ");
@@ -341,16 +315,12 @@ function makeTableWitchData(category) {
       headerRow.insertBefore(headerColumn, headerAction);
     }
   }
-
-  // Dodawanie wartości rekordów
   for (const index in rowData[category]) {
-    //Index
     const id = parseInt(index) + 1;
     const bodyRow = buildElement("tr", undefined, "trBody");
     const indexRecord = buildElement("td", undefined, "tdIndex", id);
     bodyRow.appendChild(indexRecord);
     const row = rowData[category][index];
-    // Rodawanie rekordów do kolumn
     for (const key in row) {
       if (columns.includes(key)) {
         let recordData = row[key];
@@ -361,10 +331,8 @@ function makeTableWitchData(category) {
         bodyRow.appendChild(record);
       }
     }
-    // Tworzenie Zawartości w rekordach akcji
     const tdAction = buildElement("td", undefined, "tdAction");
     bodyRow.appendChild(tdAction);
-    // Delete Button
     const deleteButton = buildElement("button", undefined, "deleteButton");
     deleteButton.addEventListener("click", () => {
       removeRow(bodyRow);
@@ -373,11 +341,8 @@ function makeTableWitchData(category) {
         markedCheckbox.splice(element, 1, "empty");
       }
     });
-    // Info Button
     const infoButton = buildElement("button", undefined, "infoButton", "+");
     infoButton.addEventListener("click", () => infoRow(body, row));
-    // checkBox
-
     const checkBoxRow = buildElement("input", undefined, "checkBoxRow");
     checkBoxRow.type = "checkbox";
     checkBoxRow.addEventListener("click", () => checkSelected(checkBoxRow, markedCheckbox, bodyRow));
@@ -387,23 +352,23 @@ function makeTableWitchData(category) {
   nameSearch.placeholder = `search by ${columns[0]}`;
   addRow();
 }
-
 function addRow() {
   search();
   const mainTableBody = document.getElementById("mainTableBody");
   while (mainTableBody.children.length !== 0) {
     mainTableBody.removeChild(mainTableBody.lastChild);
   }
-  const maxRows = parseInt(maxRowsInPage.value);
-  let start = actualyPage * maxRows;
-  const stopPage = start + maxRows > searchedRows.length ? searchedRows.length : start + maxRows;
-  for (start; start < stopPage; start++) {
-    mainTableBody.append(searchedRows[start]);
+  if (searchedRows.length !== 0) {
+    const maxRows = parseInt(maxRowsInPage.value);
+    let start = actualyPage * maxRows;
+    const stopPage = start + maxRows > searchedRows.length ? searchedRows.length : start + maxRows;
+    for (start; start < stopPage; start++) {
+      mainTableBody.append(searchedRows[start]);
+    }
+    quantityPages = Math.ceil(searchedRows.length / maxRows);
+    lastPage.textContent = ` z ${quantityPages}`;
+    inputToChangePage.placeholder = actualyPage + 1;
   }
-
-  quantityPages = Math.ceil(searchedRows.length / maxRows);
-  lastPage.textContent = ` z ${quantityPages}`;
-  changeActualyPage.placeholder = actualyPage + 1;
 }
 
 function search() {
@@ -412,7 +377,6 @@ function search() {
   }
   const filterName = nameSearch.value.toLowerCase();
   let filterId = idSearch.value;
-
   for (let i = 0; i < mainRowsInTable.length; i++) {
     const text = mainRowsInTable[i].getElementsByTagName("td")[1];
     const id = mainRowsInTable[i].getElementsByTagName("td")[0];
@@ -426,7 +390,6 @@ function search() {
       }
     } else if (filterId !== "") {
       if (parseInt(id.textContent) === parseInt(filterId)) {
-        //Coś zjebałem z wyszukiwaniem po id Niewiem czy czasem nie powinno być wyszukiwania po index w mainTableBody
         searchedRows.push(mainRowsInTable[i]);
       }
     } else {

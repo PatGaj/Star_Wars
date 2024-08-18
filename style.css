@@ -3,56 +3,52 @@
   --black: #000000;
   --white: #ffffff;
   --red: #ff0000;
-  --green: #00ff00;
   --dark-green: #068806;
 
-  --kolor1: #9eaba2ee;
-  --kolor2: #bdd1c5ee;
-  --kolor3: #eecc8cbb;
-  --kolor4: #e8b298bb;
-  --kolor5: #d3a29d;
-  --kolor6: #a36361;
-  --kolor7: #492928;
+  --color1: #9eaba2ee;
+  --color2: #bdd1c5ee;
+  --color3: #eecc8cbb;
+  --color4: #e8b298bb;
+  --color5: #d3a29d;
+  --color6: #a36361;
+  --color7: #492928;
+  --color8: #ff0000;
+  --color9: #000000;
 }
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
 }
 button {
   font-weight: bold;
   padding: 0 5px;
   cursor: pointer;
 }
+button:hover {
+  scale: 1.1;
+}
 body {
   background-image: url("img\\falcon_background.jpg");
   background-repeat: no-repeat;
   background-position: top;
   background-attachment: fixed;
+  background-size: cover;
   display: flex;
   place-items: center center;
   flex-direction: column;
   row-gap: 25px;
-  transition: background-image 0.5s ease-in-out;
-}
-#content {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-}
-/* #infoTdHead {
-} */
-#closeInfoButton {
-  float: right;
+  transition: background-image 0.5s linear;
 }
 nav {
   background-color: var(--black);
   width: 100%;
+  max-width: 1920px;
   height: 60px;
   box-shadow: inset 0 -5px 8px 2px var(--yellow);
   color: var(--white);
-  font-size: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,141 +58,98 @@ nav {
   height: 30px;
   width: 100px;
   border-radius: 8px;
-  background-color: var(--red);
+  background-color: var(--color8);
 }
-#logo {
-  width: 50%;
-  max-width: 600px;
-  min-width: 300px;
+#content {
+  display: flex;
+  justify-content: center;
 }
-#buttons {
+#divButtons {
   display: flex;
   column-gap: 25px;
 }
-#buttons button {
+.categoryButtons {
   background-color: transparent;
   width: 120px;
+
   height: 120px;
   border: none;
   border-radius: 40px;
-  box-shadow: inset 0 -5px 10px 5px;
+  box-shadow: inset 0 -5px 10px 5px var(--color9);
+  color: var(--color9);
   font-size: 18px;
-  transition: box-shadow 0.5s ease-in-out, color 0.5s ease-in-out;
+  transition: box-shadow 0.5s linear, color 0.5s linear;
 }
-#buttons button:hover {
-  transform: scale(1.2, 1.2);
-  transition: transform 0.2s ease-in-out;
+.categoryButtons:hover {
+  transform: scale(1.1, 1.1);
+  transition: transform 0.2s linear;
 }
-/* Tabela */
-th {
-  max-width: 100px;
-  padding: 5px;
+#logo {
+  width: 50vw;
+  max-width: 600px;
+  min-width: 300px;
 }
-td {
-  border-top: solid 1px;
-}
-#mainTable {
-  width: 80vw;
-  text-align: center;
-  background-color: var(--kolor3);
-  border-collapse: collapse;
-  color: var(--kolor7);
-  border-radius: 28px;
-}
+
+/* Search */
+/* Zrobione */
 #searchArea {
   display: flex;
   justify-content: center;
   column-gap: 5px;
   margin-bottom: 5px;
 }
+.search {
+  border: none;
+  border-top: solid 1px;
+  background-color: var(--color4);
+  color: var(--color7);
+  padding-left: 10px;
+  height: 40px;
+}
 #idSearch {
   width: 70px;
-  height: 40px;
-  border: none;
-  border-top-left-radius: 30px;
-  padding-left: 15px;
-  font-size: 16px;
-  background-color: var(--kolor4);
-  border-top: solid 1px;
+  border-radius: 30px 0 0 0;
 }
 #nameSearch {
   width: 250px;
-  height: 40px;
-  border: none;
-  padding: 5px;
-  font-size: 16px;
-  background-color: var(--kolor4);
-  border-top: solid 1px;
   border-right: solid 1px;
-
-  border-bottom-right-radius: 30px;
+  border-radius: 0 0 30px 0;
 }
 #searchButton {
   width: 70px;
-  border-radius: 5px;
-  border-top-right-radius: 30px;
-  background-color: var(--kolor5);
+  border-radius: 5px 30px 5px 5px;
+  background-color: var(--color5);
 }
-#changePageArea {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-#changeArea {
-  margin-left: calc(50% - 50px);
-}
-#removeAllButton {
-  background-color: #ff0000;
-  height: 20px;
-  margin-right: 25px;
-  border-radius: 0px 15px 0px 15px;
-}
-tfoot td {
+
+/* Main Table */
+
+#mainTable {
+  width: 80vw;
+  max-width: 1900px;
   text-align: center;
+  background-color: var(--color3);
+  border-collapse: collapse;
+  color: var(--color7);
+  border-radius: 28px;
 }
-.tdIndex {
-  border-right: solid 1px;
+#mainTable th {
+  max-width: 100px;
+  padding: 5px;
+}
+#mainTable td {
+  border-top: solid 1px;
+}
+.trBody {
+  height: 70px;
+}
+#headerRow {
+  height: 30px;
 }
 #thIndex {
   border-right: solid 1px;
 }
-#page {
-  width: 25px;
-  text-align: center;
-}
-#info {
-  position: fixed;
-  margin-top: 150px;
-  width: 70vw;
-  height: 50vh;
-  border-collapse: collapse;
-  border: solid 1px var(--kolor1);
-}
-#info tbody td {
-  max-width: 40vw;
-  overflow: hidden;
-  border: solid 1px var(--kolor1);
-}
-#info tbody tr {
-  background-color: var(--kolor2);
-}
-
-#info tbody th {
-  padding-right: 15px;
-  text-align: right;
-  border-top: solid 1px var(--kolor1);
-}
-
-#infoTdHead {
-  border: none;
-  background-color: var(--kolor1);
-}
-#closeInfoButton {
-  border: none;
-  width: 100px;
-  background-color: var(--red);
-  border: solid var(--dark-red) 1px;
-  border-radius: 0 0 0 25px;
+.tdIndex {
+  border-right: solid 1px;
 }
 .tdAction {
   padding: 5px 0;
@@ -219,8 +172,8 @@ tfoot td {
 .infoButton {
   width: 20px;
   height: 20px;
-  background-color: var(--green);
-  border: solid var(--dark-green) 1px;
+  background-color: var(--dark-green);
+  border: solid 1px;
   border-radius: 5px;
   text-align: center;
 }
@@ -230,22 +183,22 @@ tfoot td {
   width: 20px;
   height: 20px;
 }
-
-.trBody {
-  height: 70px;
+/* Change Page */
+#changePageArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-#headerRow {
-  height: 30px;
-}
-#changeArea {
+#pagination {
+  margin-left: calc(50% - 50px);
   display: flex;
   align-items: center;
 }
-#changeArea button {
+.arrowsToChangePage {
   width: 30px;
   height: 25px;
   border: solid 1px;
-  background-color: var(--kolor5);
+  background-color: var(--color5);
 }
 #previousPage {
   border-radius: 10px 0 0 10px;
@@ -253,76 +206,106 @@ tfoot td {
 #nextPage {
   border-radius: 0 10px 10px 0;
 }
-#masterPage {
+#containerForActualPage {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--kolor5);
+  background-color: var(--color5);
   height: 25px;
   width: 50px;
   border-top: solid 1px;
   border-bottom: solid 1px;
 }
-#page {
+#inputToChangePage {
+  width: 25px;
+  text-align: center;
   background: none;
   border: none;
-  background-color: var(--kolor4);
+  background-color: var(--color4);
   height: 100%;
-  font-size: 16px;
 }
-#maxRows {
+#maxRowsInPage {
   background: none;
   border: none;
-  background-color: var(--kolor6);
+  background-color: var(--color6);
   margin-left: 10px;
   width: 40px;
   height: 25px;
   border-radius: 8px;
 }
-@media (min-width: 1920px) {
-  body {
-    background-size: 100%;
-  }
-  nav {
-    width: 1920px;
-  }
+#removeAllButton {
+  background-color: #ff0000;
+  height: 20px;
+  width: 100px;
+  min-width: 100px;
+  margin-right: 25px;
+  border-radius: 0px 15px 0px 15px;
+  font-size: 12px;
+}
+
+/* More Info Table */
+#info {
+  position: fixed;
+  margin-top: 150px;
+  width: 70vw;
+  max-width: 1800px;
+  height: 50vh;
+  border-collapse: collapse;
+  border: solid 1px var(--color1);
+}
+
+#info tbody tr {
+  background-color: var(--color2);
+}
+#info tbody th {
+  padding-right: 15px;
+  text-align: right;
+  border-top: solid 1px var(--color1);
+}
+#infoTdHead {
+  border: none;
+  background-color: var(--color1);
+}
+#closeInfoButton {
+  float: right;
+  border: none;
+  width: 100px;
+  background-color: var(--red);
+  border-radius: 0 0 0 25px;
+}
+#info tbody td {
+  max-width: 40vw;
+  overflow: hidden;
+  border: solid 1px var(--color1);
 }
 @media (max-width: 1024px) {
-  #buttons {
+  #divButtons {
     margin-top: 25px;
     flex-direction: column;
     row-gap: 25px;
   }
-  #buttons button {
+  #divButtons button {
     width: calc(100vw - 300px);
     height: 50px;
   }
 }
 @media (max-width: 600px) {
+  * {
+    font-size: 12px;
+  }
   #nameSearch {
     width: 150px;
     height: 25px;
-    font-size: 12px;
   }
   #idSearch {
     width: 50px;
     height: 25px;
-    font-size: 12px;
   }
-  #changeArea {
-    margin-left: 20px;
-  }
-  nav div {
-    margin-left: 40px;
-  }
-  #saber {
-    margin-left: 0;
-  }
-  #buttons button {
+  .categoryButtons {
     min-width: 300px;
   }
-  table {
-    font-size: 12px;
+  #pagination {
+    margin-left: 20px;
   }
 }
 @media (max-width: 400px) {
