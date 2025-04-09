@@ -18,7 +18,7 @@ content.appendChild(logo);
 const mainRowsInTable = [];
 const searchedRows = [];
 const markedCheckbox = [];
-let actualyPage = 0;
+let actuallyPage = 0;
 let quantityPages = 1;
 const containerForTable = buildElement("div", "containerForTable");
 const searchArea = buildElement("div", "searchArea");
@@ -38,32 +38,32 @@ searchButton.addEventListener("click", addRow);
 searchArea.append(idSearch, nameSearch, searchButton);
 const previousPage = buildElement("button", "previousPage", "arrowsToChangePage", "<");
 previousPage.addEventListener("click", () => {
-  if (actualyPage !== 0) {
-    actualyPage -= 1;
+  if (actuallyPage !== 0) {
+    actuallyPage -= 1;
     addRow();
   }
 });
 const nextPage = buildElement("button", "nextPage", "arrowsToChangePage", ">");
 nextPage.addEventListener("click", () => {
-  if (actualyPage + 1 !== quantityPages) {
-    actualyPage += 1;
+  if (actuallyPage + 1 !== quantityPages) {
+    actuallyPage += 1;
     addRow();
   }
 });
 const inputToChangePage = buildElement("input", "inputToChangePage");
-inputToChangePage.setAttribute("placeholder", actualyPage + 1);
+inputToChangePage.setAttribute("placeholder", actuallyPage + 1);
 inputToChangePage.addEventListener("change", () => {
   let changePage = parseInt(inputToChangePage.value);
   if (changePage > quantityPages) {
     changePage = quantityPages;
   }
-  actualyPage = changePage - 1;
+  actuallyPage = changePage - 1;
   addRow();
   inputToChangePage.value = "";
 });
 const maxRowsInPage = buildElement("select", "maxRowsInPage");
 maxRowsInPage.addEventListener("change", () => {
-  actualyPage = 0;
+  actuallyPage = 0;
   addRow();
 });
 const listOfMaxRows = [10, 20];
@@ -170,7 +170,7 @@ function buildElement(typeElement, idElement, classElement, textElement, srcElem
   }
   return element;
 }
-function actualyCategory(category) {
+function actuallyCategory(category) {
   const buttons = divButtons.children;
   for (const button of buttons) {
     button.style.border = "none";
@@ -182,9 +182,9 @@ function removeRow(child) {
   const mainTableBody = document.getElementById("mainTableBody");
   mainRowsInTable.splice(mainRowsInTable.indexOf(child), 1);
   if (mainTableBody.children.length === 1 && mainRowsInTable.length !== 0) {
-    actualyPage = quantityPages - 2;
-    if (actualyPage < 0) {
-      actualyPage = 0;
+    actuallyPage = quantityPages - 2;
+    if (actuallyPage < 0) {
+      actuallyPage = 0;
     }
   } else if (mainRowsInTable.length === 0) {
     mainTableBody.textContent = "Brak elementów do wyświetlenia";
@@ -217,34 +217,34 @@ function infoRow(parent, rowToGetInfo) {
     infoTrBody.append(infoThBody, infoTdBody);
   }
 }
-function checkSelected(checkbox, listOfMarkedCheckboxs, row) {
+function checkSelected(checkbox, listOfMarkedCheckbox, row) {
   if (checkbox.checked) {
-    const empty = listOfMarkedCheckboxs.indexOf("empty");
+    const empty = listOfMarkedCheckbox.indexOf("empty");
     if (empty === -1) {
-      listOfMarkedCheckboxs.push(row);
+      listOfMarkedCheckbox.push(row);
     } else {
-      listOfMarkedCheckboxs[empty] = row;
+      listOfMarkedCheckbox[empty] = row;
     }
-  } else if (listOfMarkedCheckboxs.includes(row)) {
-    const indexOfTheElement = listOfMarkedCheckboxs.indexOf(row);
-    listOfMarkedCheckboxs.splice(indexOfTheElement, 1, "empty");
-    clearList(listOfMarkedCheckboxs);
+  } else if (listOfMarkedCheckbox.includes(row)) {
+    const indexOfTheElement = listOfMarkedCheckbox.indexOf(row);
+    listOfMarkedCheckbox.splice(indexOfTheElement, 1, "empty");
+    clearList(listOfMarkedCheckbox);
   }
   const removeAllButtonExist = Boolean(document.getElementById("removeAllButton"));
   if (!removeAllButtonExist) {
     const removeAllButton = buildElement("button", "removeAllButton", undefined, "Remove All");
     removeAllButton.addEventListener("click", () => {
-      for (const check of listOfMarkedCheckboxs) {
+      for (const check of listOfMarkedCheckbox) {
         if (check === "empty") {
           continue;
         }
         removeRow(check);
       }
-      listOfMarkedCheckboxs.splice(0, listOfMarkedCheckboxs.length);
+      listOfMarkedCheckbox.splice(0, listOfMarkedCheckbox.length);
       changePageArea.removeChild(removeAllButton);
     });
     changePageArea.append(removeAllButton);
-  } else if (listOfMarkedCheckboxs.length == 0 && removeAllButtonExist) {
+  } else if (listOfMarkedCheckbox.length == 0 && removeAllButtonExist) {
     const removeAllButton = document.getElementById("removeAllButton");
     changePageArea.removeChild(removeAllButton);
   }
@@ -259,14 +259,14 @@ function clearList(list) {
 }
 
 function makeTableWitchData(category) {
-  actualyCategory(category);
+  actuallyCategory(category);
   while (markedCheckbox.length !== 0) {
     markedCheckbox.pop();
   }
   if (Boolean(document.getElementById("removeAllButton"))) {
     changePageArea.removeChild(document.getElementById("removeAllButton"));
   }
-  actualyPage = 0;
+  actuallyPage = 0;
   idSearch.value = "";
   nameSearch.value = "";
   if (Boolean(document.getElementById("logo"))) {
@@ -360,14 +360,14 @@ function addRow() {
   }
   if (searchedRows.length !== 0) {
     const maxRows = parseInt(maxRowsInPage.value);
-    let start = actualyPage * maxRows;
+    let start = actuallyPage * maxRows;
     const stopPage = start + maxRows > searchedRows.length ? searchedRows.length : start + maxRows;
     for (start; start < stopPage; start++) {
       mainTableBody.append(searchedRows[start]);
     }
     quantityPages = Math.ceil(searchedRows.length / maxRows);
     lastPage.textContent = ` z ${quantityPages}`;
-    inputToChangePage.placeholder = actualyPage + 1;
+    inputToChangePage.placeholder = actuallyPage + 1;
   }
 }
 
